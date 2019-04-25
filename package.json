@@ -1,0 +1,25 @@
+{
+  "name": "amazonapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bamazonCustomre.js",
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "mysql": "^2.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apg2677/amazonapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apg2677/amazonapp/issues"
+  },
+  "homepage": "https://github.com/apg2677/amazonapp#readme"
+}
