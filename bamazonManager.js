@@ -64,3 +64,19 @@ function GetProducts() {
     });
 
 }
+
+function GetLowInventory() {
+    connection.connect(function (err) {
+        if (err) throw err;
+        console.log("connected as id " + connection.threadId + "\n");
+        console.log("Querying inventory...\n");
+        var query = connection.query(
+            "SELECT * FROM products where stock_quantity < 5",
+            function (err, res) {
+                // console.log(res.affectedRows + " products returned!\n");
+                console.log("results: " + JSON.stringify(res, null, 4));
+                connection.end();
+            }
+        )
+    });
+}
