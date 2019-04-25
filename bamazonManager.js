@@ -14,11 +14,7 @@ var connection = mysql.createConnection({
     database: "bamazon"
 })
 
-// connection.connect(function (err) {
-//     if (err) throw err;
-//     console.log("connected as id " + connection.threadId + "\n");
-  
-// });
+
 GetCommand();
 
 function GetCommand() {
@@ -31,6 +27,40 @@ function GetCommand() {
             message: "Pick a command"
         }
     ]).then(function(answer) {
-        console.log("Command: " + answer.command);
+        var command = answer.command;
+        switch(command) {
+            case commands[0]:
+                GetProducts();
+                break;
+            case commands[1]:
+                GetLowInventory();
+                break;
+            case commands[2]:
+                UpdateInventory();
+                break;
+            case commands[3]:
+                AddProduct();
+                break;
+            default:
+                console.log("Not a choice");   
+                break;    
+            }
     })
+}
+
+function GetProducts() {
+    connection.connect(function (err) {
+        if (err) throw err;
+        console.log("connected as id " + connection.threadId + "\n");
+        console.log("Querying prpoducts...\n");
+        var query = connection.query(
+            "SELECT * FROM products",
+            function (err, res) {
+                console.log(res.affectedRows + " products returned!\n");
+                console.log("results: " + JSON.stringify(res, null, 4));
+                connection.end();
+            }
+        )
+    });
+
 }
