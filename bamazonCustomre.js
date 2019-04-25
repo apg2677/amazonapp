@@ -19,7 +19,9 @@ connection.connect(function (err) {
     console.log("connected as id " + connection.threadId + "\n");
     // ListProducts();
     GetOrder();
-    connection.end();
+    // console.log(order);
+
+     // connection.end();
 });
 
 function ListProducts() {
@@ -45,8 +47,37 @@ function GetOrder() {
             message: "units"
         }
     ]).then(function (answers) {
-        console.log(answers);
-    }
+        var query = connection.query(
+            "SELECT stock_quantity FROM products where item_id=" + answers.ID,
+            function (err, res) {
+                // console.log(query.sql);
+                var stock_quantity = res[0].stock_quantity;
+                var ID = answers.ID;
+                var order_qty = answers.units;
+                console.log("results: " + stock_quantity);
+                if(answers.units > stock_quantity ) {
+                    console.log("Not enough units in stock");
+
+                }
+                else {
+                    updateUnits(ID, stock_quantity,order_qty);
+                }
+                connection.end();
+            }
+        )
+    });
+
+}
+function updateUnits(id, qty, units) {
+    var tempQty = qty;
+    tempQty -= units;   
+    var query = connection.query(
+        "UPDATE products SET stock_quantity = " + tempQty + " where item_id=" + id,
+        function (err, res) {
+            console.log("Quantity Updated");
+           
+           // connection.end();
+        }
     )
 }
 
