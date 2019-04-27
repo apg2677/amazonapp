@@ -57,7 +57,8 @@ function GetProducts() {
             "SELECT * FROM products",
             function (err, res) {
                 console.log(res.affectedRows + " products returned!\n");
-                console.log("results: " + JSON.stringify(res, null, 4));
+                // console.log("results: " + JSON.stringify(res, null, 4));
+                DisplayResults(res);
                 connection.end();
             }
         )
@@ -74,9 +75,17 @@ function GetLowInventory() {
             "SELECT * FROM products where stock_quantity < 5",
             function (err, res) {
                 // console.log(res.affectedRows + " products returned!\n");
-                console.log("results: " + JSON.stringify(res, null, 4));
+              
                 connection.end();
             }
         )
     });
 }
+
+function DisplayResults(table) {
+   var keys =  Object.keys(table[0]);
+   // console.log("Object Keys: " + keys);
+    for (var i in keys) {
+        console.log(keys[i]);
+    }
+}   
