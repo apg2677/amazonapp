@@ -83,19 +83,34 @@ function GetLowInventory() {
 }
 
 function DisplayResults(table) {
-   var keys =  Object.keys(table[0]);
-   var headerStr = "";
-   var borderStr ="_";
+   CreateHeader(table);
+
+   var valuesStr = "";
+   for (var i in table) {
+      var temp = Object.values(table[i]);
+       for(var j=0;j<temp.length;j++){
+         valuesStr+=temp[j] + " ";
+       }
+       console.log(valuesStr);
+       valuesStr="";
+   }
+   
+}   
+
+function CreateHeader(table) {
+    var keys = Object.keys(table[0]);
+    var headerStr = "";
+    var borderStr = "_";
     for (var i in keys) {
-        headerStr+=keys[i] + "\t";  
-        var tempStr = keys[i] +"\t";
+        headerStr += keys[i] + "\t";
+        var tempStr = keys[i] + "\t";
         var len = tempStr.length;
-        for (var j=0;j<len;j++) {
-            borderStr+="_"
-        }  
-        borderStr+=" ";
-        
+        for (var j = 0; j < len; j++) {
+            borderStr += "_";
+        }
+        borderStr += " ";
     }
     console.log(headerStr);
     console.log(borderStr);
-}   
+    console.log("");
+}
