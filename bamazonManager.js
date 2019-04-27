@@ -84,8 +84,18 @@ function GetLowInventory() {
 
 function DisplayResults(table) {
    var keys =  Object.keys(table[0]);
-   // console.log("Object Keys: " + keys);
+   var headerStr = "";
+   var borderStr ="_";
     for (var i in keys) {
-        console.log(keys[i]);
+        headerStr+=keys[i] + "\t";  
+        var tempStr = keys[i] +"\t";
+        var len = tempStr.length;
+        for (var j=0;j<len;j++) {
+            borderStr+="_"
+        }  
+        borderStr+=" ";
+        
     }
+    console.log(headerStr);
+    console.log(borderStr);
 }   
