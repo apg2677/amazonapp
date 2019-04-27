@@ -26,9 +26,9 @@ function GetCommand() {
             choices: commands,
             message: "Pick a command"
         }
-    ]).then(function(answer) {
+    ]).then(function (answer) {
         var command = answer.command;
-        switch(command) {
+        switch (command) {
             case commands[0]:
                 GetProducts();
                 break;
@@ -42,9 +42,9 @@ function GetCommand() {
                 AddProduct();
                 break;
             default:
-                console.log("Not a choice");   
-                break;    
-            }
+                console.log("Not a choice");
+                break;
+        }
     })
 }
 
@@ -72,10 +72,11 @@ function GetLowInventory() {
         console.log("connected as id " + connection.threadId + "\n");
         console.log("Querying inventory...\n");
         var query = connection.query(
-            "SELECT * FROM products where stock_quantity < 5",
+            "SELECT * FROM products where stock_quantity < 65",
+
             function (err, res) {
-                // console.log(res.affectedRows + " products returned!\n");
-              
+                //console.log(JSON.stringify(res));
+                DisplayResults(res);
                 connection.end();
             }
         )
@@ -83,19 +84,23 @@ function GetLowInventory() {
 }
 
 function DisplayResults(table) {
-   CreateHeader(table);
+    CreateHeader(table);
 
-   var valuesStr = "";
-   for (var i in table) {
-      var temp = Object.values(table[i]);
-       for(var j=0;j<temp.length;j++){
-         valuesStr+=temp[j] + " ";
-       }
-       console.log(valuesStr);
-       valuesStr="";
-   }
-   
-}   
+    DisplayData(table);
+
+}
+
+function DisplayData(table) {
+    var valuesStr = "";
+    for (var i in table) {
+        var temp = Object.values(table[i]);
+        for (var j = 0; j < temp.length; j++) {
+            valuesStr += temp[j] + "\t";
+        }
+        console.log(valuesStr);
+        valuesStr = "";
+    }
+}
 
 function CreateHeader(table) {
     var keys = Object.keys(table[0]);
