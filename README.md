@@ -20,6 +20,8 @@
 
 ![Snap9](/screenshots/snap9.png)
 
+### Instead of querying products with less than 5 in inventory i am using 65 as the amount
+
 ![Snap10](/screenshots/snap10.png)
 
 ![Snap11](/screenshots/snap11.png)
