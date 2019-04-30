@@ -137,14 +137,13 @@ function UpdateInventory(a) {
         if (err) throw err;
         console.log("connected as id " + connection.threadId + "\n");
         console.log("Updating inventory...\n");
-        console.log(JSON.stringify(a));
+       // console.log(JSON.stringify(a));
         var query = connection.query(
             "UPDATE products SET stock_quantity = ? where item_id = ?",
             [a.new_qty, a.id ],
                 
             function (err, res) {
-                //console.log(JSON.stringify(res));
-                // DisplayResults(res);
+              console.log("Item: " + a.id + " updated new qty: " + a.new_qty);
                 connection.end();
             }
         )
