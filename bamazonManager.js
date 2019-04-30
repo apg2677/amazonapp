@@ -181,7 +181,7 @@ function AddProduct(a) {
             [a.pname, a.dname, a.price, a.qty],
 
             function (err, res) {
-                // console.log("Item: " + a.id + " updated new qty: " + a.new_qty);
+                console.log("New Item added to the Database");
                 connection.end();
             }
         )
