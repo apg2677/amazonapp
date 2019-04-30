@@ -72,8 +72,8 @@ function GetLowInventory() {
         console.log("connected as id " + connection.threadId + "\n");
         console.log("Querying inventory...\n");
         var query = connection.query(
-            "SELECT * FROM products where stock_quantity < 65",
-
+            "SELECT * FROM products where stock_quantity < ?",
+            65,
             function (err, res) {
                 //console.log(JSON.stringify(res));
                 DisplayResults(res);
