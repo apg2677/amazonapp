@@ -36,7 +36,19 @@ function GetCommand() {
                 GetLowInventory();
                 break;
             case commands[2]:
-                UpdateInventory();
+                inquirer.prompt([
+                    {
+                        name:"id",
+                        message:"Enter ID of product:"
+                    },
+                    {
+                        name:"new_qty",
+                        message:"New Quantity"
+                    }
+                ]).then(function(answer) {
+                    UpdateInventory(answer);
+                })
+                
                 break;
             case commands[3]:
                 AddProduct();
@@ -118,4 +130,23 @@ function CreateHeader(table) {
     console.log(headerStr);
     console.log(borderStr);
     console.log("");
+}
+
+function UpdateInventory(a) {
+    connection.connect(function (err) {
+        if (err) throw err;
+        console.log("connected as id " + connection.threadId + "\n");
+        console.log("Updating inventory...\n");
+        console.log(JSON.stringify(a));
+        var query = connection.query(
+            "UPDATE products SET stock_quantity = ? where item_id = ?",
+            [a.new_qty, a.id ],
+                
+            function (err, res) {
+                //console.log(JSON.stringify(res));
+                // DisplayResults(res);
+                connection.end();
+            }
+        )
+    });
 }
