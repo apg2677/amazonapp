@@ -149,3 +149,21 @@ function UpdateInventory(a) {
         )
     });
 }
+
+function AddProduct(a) {
+    connection.connect(function (err) {
+        if (err) throw err;
+        console.log("connected as id " + connection.threadId + "\n");
+        console.log("Adding product to inventory...\n");
+       // console.log(JSON.stringify(a));
+        var query = connection.query(
+            "INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?, ?, ?, ?)",
+            ["Baseball", "sports", 34, 211 ],
+                
+            function (err, res) {
+             // console.log("Item: " + a.id + " updated new qty: " + a.new_qty);
+                connection.end();
+            }
+        )
+    });
+}
