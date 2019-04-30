@@ -38,20 +38,40 @@ function GetCommand() {
             case commands[2]:
                 inquirer.prompt([
                     {
-                        name:"id",
-                        message:"Enter ID of product:"
+                        name: "id",
+                        message: "Enter ID of product:"
                     },
                     {
-                        name:"new_qty",
-                        message:"New Quantity"
+                        name: "new_qty",
+                        message: "New Quantity"
                     }
-                ]).then(function(answer) {
+                ]).then(function (answer) {
                     UpdateInventory(answer);
                 })
-                
+
                 break;
             case commands[3]:
-                AddProduct();
+                inquirer.prompt([
+                    {
+                        name: "pname",
+                        message: "Enter Product Name"
+                    },
+                    {
+                        name: "dname",
+                        message: "Enter Department Name"
+                    },
+                    {
+                        name: "price",
+                        message: "Enter Price"
+                    },
+                    {
+                        name: "qty",
+                        message: "Quantity"
+                    }
+                ]).then(function (answer) {
+                    AddProduct(answer);
+                });
+
                 break;
             default:
                 console.log("Not a choice");
@@ -137,13 +157,13 @@ function UpdateInventory(a) {
         if (err) throw err;
         console.log("connected as id " + connection.threadId + "\n");
         console.log("Updating inventory...\n");
-       // console.log(JSON.stringify(a));
+        // console.log(JSON.stringify(a));
         var query = connection.query(
             "UPDATE products SET stock_quantity = ? where item_id = ?",
-            [a.new_qty, a.id ],
-                
+            [a.new_qty, a.id],
+
             function (err, res) {
-              console.log("Item: " + a.id + " updated new qty: " + a.new_qty);
+                console.log("Item: " + a.id + " updated new qty: " + a.new_qty);
                 connection.end();
             }
         )
@@ -155,13 +175,13 @@ function AddProduct(a) {
         if (err) throw err;
         console.log("connected as id " + connection.threadId + "\n");
         console.log("Adding product to inventory...\n");
-       // console.log(JSON.stringify(a));
+        // console.log(JSON.stringify(a));
         var query = connection.query(
             "INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?, ?, ?, ?)",
-            ["Baseball", "sports", 34, 211 ],
-                
+            [a.pname, a.dname, a.price, a.qty],
+
             function (err, res) {
-             // console.log("Item: " + a.id + " updated new qty: " + a.new_qty);
+                // console.log("Item: " + a.id + " updated new qty: " + a.new_qty);
                 connection.end();
             }
         )
